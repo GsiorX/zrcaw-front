@@ -1,0 +1,38 @@
+.documents--component {
+  display: flex;
+
+  & > .documents--menu {
+    width: 15%;
+  }
+
+  & > .document--details--view {
+    padding: 10px;
+    width: 100%;
+  }
+}
+
+.document--details {
+  width: 100%;
+  & > .bucket--upload {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.file--list--element {
+  display: flex !important;
+  justify-content: space-between !important;
+  & > .file--objectkey {
+    width: 30%;
+  }
+
+  & > .file--size {
+    width: 30%;
+  }
+
+  & >.file--list--column {
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+}

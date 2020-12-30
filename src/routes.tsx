@@ -3,8 +3,10 @@ import { SvgIconProps } from '@material-ui/core';
 import WorkIcon from '@material-ui/icons/Work';
 import ImageIcon from '@material-ui/icons/Image';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
+import DescriptionIcon from '@material-ui/icons/Description';
 import {BucketsComponent} from "./components/buckets/BucketsComponent";
 import {ImagesComponent} from "./components/images/ImagesComponent";
+import {DocumentsComponent} from "./components/documents/DocumentsComponent";
 
 export var routes: AppRoute[] = [
     {
@@ -13,6 +15,13 @@ export var routes: AppRoute[] = [
         label: 'Buckets',
         icon: <WorkIcon />,
         component: () => <BucketsComponent />
+    },
+    {
+        path: "/documents",
+        exact: true,
+        label: 'Documents',
+        icon: <DescriptionIcon />,
+        component: () => <DocumentsComponent/>
     },
     {
         path: "/images",
