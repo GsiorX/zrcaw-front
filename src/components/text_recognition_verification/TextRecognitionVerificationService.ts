@@ -1,6 +1,6 @@
 import axios, {AxiosResponse} from 'axios';
 
-import {DocumentDetails} from "../documents/DocumentService";
+import {DocumentDetails} from "../documents/DocumentsService";
 
 export interface TextRecognitionUpdateRequest {
     text: string | undefined;

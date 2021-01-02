@@ -5,7 +5,7 @@ import {getFileUrl} from "../buckets/BucketsService";
 import MenuList from "@material-ui/core/MenuList";
 import MenuItem from "@material-ui/core/MenuItem";
 import Typography from "@material-ui/core/Typography";
-import {DocumentDetails, DocumentListItem, getDocument} from "../documents/DocumentService";
+import {DocumentDetails, DocumentListItem, fetchDocument} from "../documents/DocumentsService";
 import {fetchDocumentsToTextRecognitionVerification, updateTextRecognition} from "./TextRecognitionVerificationService";
 
 
@@ -35,7 +35,7 @@ interface TextRecognitionUpdateProps {
     onCurrentDocumentChanged: (document: DocumentListItem | null) => void;
 }
 
-const TextRecognitionUpdateComponent: React.FC<TextRecognitionUpdateProps> = ({currentDocument, onCurrentDocumentChanged}) => {
+const TextRecognitionUpdateComponent: React.FC<TextRecognitionUpdateProps> = ({currentDocument}) => {
     const [currentDocumentDetails, setCurrentDocumentDetails] = useState<DocumentDetails | null> ( null);
     const [TextRecognitionTextFieldValue, setTextRecognitionTextFieldValue] = useState<string |null>(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -43,7 +43,7 @@ const TextRecognitionUpdateComponent: React.FC<TextRecognitionUpdateProps> = ({c
     useEffect(() => {
         if(currentDocument != null) {
             setIsLoading(true);
-            getDocument(currentDocument.documentId)
+            fetchDocument(currentDocument.documentId)
                 .then(document => {
                     setCurrentDocumentDetails(document);
                     setIsLoading(false);

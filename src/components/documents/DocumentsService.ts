@@ -1,27 +1,47 @@
-import axios, {AxiosResponse} from 'axios';
+import axios, {AxiosResponse} from "axios";
 
-export interface Document {
-    documentId: Number;
+export interface DocumentListItem {
+    documentId: string;
+    name: string;
+}
+
+export interface DocumentDetails {
+    documentId: string;
+    name: string;
+    fileDetails: FileDetails;
+    translationResult: TranslationResult | null;
+    textRecognitionResult: TextRecognitionResult | null;
+}
+
+export interface FileDetails {
+    objectKey: string;
+    bucketName: string;
+}
+
+export interface TranslationResult {
+    resultType: string;
+    translatedText: string;
+    sourceLanguage: string;
+    targetLanguage: string;
+}
+
+export interface TextRecognitionResult {
+    resultType: string;
+    confidence: number;
+    result: string;
 }
 
 export async function fetchDocuments() {
-    const result: Document[] = await axios('http://localhost:8080/documents')
-        .then((response: AxiosResponse<Document[]>) => response.data);
-    return result;
+    return await axios(`http://localhost:8080/documents`)
+        .then((response: AxiosResponse<DocumentListItem[]>) => response.data);
 }
 
-export interface FileObject {
-    objectKey: string;
-    size: number;
+export async function fetchDocument(documentId: string) {
+    return await axios(`http://localhost:8080/documents/${documentId}`)
+        .then((response: AxiosResponse<DocumentDetails>) => response.data);
 }
 
-export async function fetchDocument(document: Document) {
-    const result: Document = await axios(`http://localhost:8080/documents/${document.documentId}`)
-        .then((response: AxiosResponse<Document>) => response.data);
-    return result;
-}
-
-export function downloadDocument(bucketName: string, file: FileObject) {
+export function downloadDocument(bucketName: string, file: FileDetails) {
     axios({
         url: getFileUrl(bucketName, file.objectKey),
         method: 'GET',

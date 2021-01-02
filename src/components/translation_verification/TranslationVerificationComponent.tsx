@@ -9,7 +9,7 @@ import {
 import MenuList from "@material-ui/core/MenuList";
 import MenuItem from "@material-ui/core/MenuItem";
 import Typography from "@material-ui/core/Typography";
-import {DocumentDetails, DocumentListItem, getDocument} from "../documents/DocumentService";
+import {DocumentDetails, DocumentListItem, fetchDocument} from "../documents/DocumentsService";
 
 
 interface DocumentsListProps {
@@ -38,7 +38,7 @@ interface TranslationUpdateProps {
     onCurrentDocumentChanged: (document: DocumentListItem | null) => void;
 }
 
-const TranslationUpdateComponent: React.FC<TranslationUpdateProps> = ({currentDocument, onCurrentDocumentChanged}) => {
+const TranslationUpdateComponent: React.FC<TranslationUpdateProps> = ({currentDocument}) => {
     const [currentDocumentDetails, setCurrentDocumentDetails] = useState<DocumentDetails | null> ( null);
     const [translationTextFieldValue, setTranslationTextFieldValue] = useState<string |null>(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -46,7 +46,7 @@ const TranslationUpdateComponent: React.FC<TranslationUpdateProps> = ({currentDo
     useEffect(() => {
         if(currentDocument != null) {
             setIsLoading(true);
-            getDocument(currentDocument.documentId)
+            fetchDocument(currentDocument.documentId)
                 .then(document => {
                     setCurrentDocumentDetails(document);
                     setIsLoading(false);
