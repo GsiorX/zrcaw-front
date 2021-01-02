@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from 'axios';
-import {DocumentListItem} from "../documents/DocumentService";
+import {DocumentListItem} from "../documents/DocumentsService";
 
 export interface TranslationUpdateRequest {
     text: string | undefined;
