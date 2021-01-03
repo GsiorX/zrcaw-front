@@ -1,50 +1,16 @@
 import React, {useState} from 'react';
 import Sidebar from "react-sidebar";
-import {BrowserRouter, Link, Route, Switch, useLocation} from "react-router-dom";
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import {BrowserRouter, Switch} from "react-router-dom";
+import Amplify, { Auth } from 'aws-amplify';
+import {routes} from "./routes";
+import SidebarComponent from './components/sidebar/Sidebar';
+import RoutesComponent from './components/routes/Routes';
+import { withAuthenticator } from '@aws-amplify/ui-react';
 
-import {AppRoute, routes} from "./routes";
+import { config } from "./amplify-config"
 import './App.scss';
 
-const SidebarComponent: React.FC<{ title: string, routes: AppRoute[] }> = ({title, routes}) => {
-    const location = useLocation();
-    return (
-        <div>
-            <div className='app--title'>
-                <p className='title'>{title}</p>
-            </div>
-            <List>
-                {
-                    routes.map((route, index) => (
-                        <Link to={route.path} style={{ color: 'inherit', textDecoration: 'none' }} key={index}>
-                            <ListItem button key={index} selected={location.pathname === route.path}>
-                                <ListItemIcon>{route.icon}</ListItemIcon>
-                                <ListItemText primary={route.label}/>
-                            </ListItem>
-                        </Link>
-                    ))
-                }
-            </List>
-        </div>
-    )
-};
-
-const RoutesComponent: React.FC<{ routes: AppRoute[] }> = ({routes}) => (
-    <React.Fragment>
-        {
-            routes.map((route, index) => (
-                <Route key={index}
-                       path={route.path}
-                       exact={route.exact || false}
-                       children={<div className='route--container'><route.component/></div>}
-                />
-            ))
-        }
-    </React.Fragment>
-);
+Amplify.configure(config);
 
 function App() {
     const [appRoutes,] = useState(routes);
@@ -68,4 +34,4 @@ function App() {
     );
 }
 
-export default App;
+export default withAuthenticator(App);
