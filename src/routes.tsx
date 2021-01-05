@@ -5,8 +5,9 @@ import ImageIcon from '@material-ui/icons/Image';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import DescriptionIcon from '@material-ui/icons/Description';
 import {BucketsComponent} from "./components/buckets/BucketsComponent";
-import {ImagesComponent} from "./components/images/ImagesComponent";
 import {DocumentsComponent} from "./components/documents/DocumentsComponent";
+import {TranslationVerificationComponent} from "./components/translation_verification/TranslationVerificationComponent";
+import {TextRecognitionVerificationComponent} from "./components/text_recognition_verification/TextRecognitionVerificationComponent";
 
 export var routes: AppRoute[] = [
     {
@@ -24,16 +25,16 @@ export var routes: AppRoute[] = [
         component: () => <DocumentsComponent/>
     },
     {
-        path: "/images",
-        label: 'Images',
+        path: "/translationVerification",
+        label: 'Translation verification',
         icon: <PhotoLibraryIcon />,
-        component: () => <ImagesComponent />
+        component: () => <TranslationVerificationComponent />
     },
     {
-        path: "/rekognition",
-        label: 'Rekognition',
+        path: "/textRecognitionVerification",
+        label: 'Text recognition verification',
         icon: <ImageIcon />,
-        component: () => <div>Rekognition</div>
+        component: () => <TextRecognitionVerificationComponent />
     }
 ];
 

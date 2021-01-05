@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {DataGrid, ColDef} from '@material-ui/data-grid';
 
 import './DocumentsComponent.scss';
-import {Document} from "./DocumentsService";
+import {DocumentListItem} from "./DocumentsService";
 import {downloadDocument, fetchDocuments} from "./DocumentsService";
 
 
@@ -13,9 +13,9 @@ const columns: ColDef[] = [
 ]
 
 interface DocumentListProps {
-    documents: Document[],
-    selectedDocument: Document | null,
-    onDocumentSelected: (document: Document) => void;
+    documents: DocumentListItem[],
+    selectedDocument: DocumentListItem | null,
+    onDocumentSelected: (document: DocumentListItem) => void;
 }
 
 const DocumentDetailsView: React.FC<DocumentListProps> = ({documents, selectedDocument, onDocumentSelected}) => (
@@ -25,32 +25,27 @@ const DocumentDetailsView: React.FC<DocumentListProps> = ({documents, selectedDo
 );
 
 export const DocumentsComponent: React.FC<{}> = () => {
-    const [selectedDocument, setSelectedDocument] = useState<Document | null>(null);
-    const [documentsList, setDocumentList] = useState<Document[]>([
+    const [selectedDocument, setSelectedDocument] = useState<DocumentListItem | null>(null);
+    const [documentsList, setDocumentList] = useState<DocumentListItem[]>([
         {
             id: 1,
             fileName: '1.png',
-            uploadedBy: 'User'
         },
         {
             id: 2,
             fileName: '2.png',
-            uploadedBy: 'User'
         },
         {
             id: 3,
             fileName: '3.png',
-            uploadedBy: 'User'
         },
         {
             id: 4,
             fileName: '4.png',
-            uploadedBy: 'User'
         },
         {
             id: 5,
             fileName: '5.png',
-            uploadedBy: 'User'
         }
     ]);
 
@@ -68,7 +63,7 @@ export const DocumentsComponent: React.FC<{}> = () => {
             <div className='documents--table'>
                 <DocumentDetailsView documents={documentsList}
                     selectedDocument={selectedDocument}
-                    onDocumentSelected={(document: Document) => setSelectedDocument(document)}/>
+                    onDocumentSelected={(document: DocumentListItem) => setSelectedDocument(document)}/>
             </div>
             {/*<div className='document--details--view'>*/}
             {/*    {*/}
