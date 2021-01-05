@@ -1,16 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import Typography from '@material-ui/core/Typography';
-import MenuList from '@material-ui/core/MenuList';
-import MenuItem from '@material-ui/core/MenuItem';
-import Button from '@material-ui/core/Button'
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
+import {DataGrid, ColDef} from '@material-ui/data-grid';
 
 import './DocumentsComponent.scss';
 import {Document} from "./DocumentsService";
 import {downloadDocument, fetchDocuments} from "./DocumentsService";
-import {Bucket} from "../buckets/BucketsService";
 
+
+const columns: ColDef[] = [
+    {field: 'id', headerName: 'ID', width: 70},
+    {field: 'fileName', headerName: 'File name', width: 130},
+    {field: 'uploadedBy', headerName: 'Uploaded by', width: 150},
+]
 
 interface DocumentListProps {
     documents: Document[],
@@ -19,27 +19,40 @@ interface DocumentListProps {
 }
 
 const DocumentDetailsView: React.FC<DocumentListProps> = ({documents, selectedDocument, onDocumentSelected}) => (
-    <MenuList key='document--list'>
-        {
-            documents.map((document, index) => (
-                <MenuItem key={index}
-                    button
-                    selected={selectedDocument != null && document.documentId === selectedDocument.documentId}
-                    onClick={() => onDocumentSelected(document)}>
-                    <Typography variant='inherit'>{document.documentId}</Typography>
-                </MenuItem>
-            ))
-        }
-    </MenuList>
+    <div style={{height: 400, width: '100%'}}>
+        <DataGrid rows={documents} columns={columns} pageSize={10} disableMultipleSelection hideFooterSelectedRowCount onRowSelected={() => onDocumentSelected}/>
+    </div>
 );
 
 export const DocumentsComponent: React.FC<{}> = () => {
     const [selectedDocument, setSelectedDocument] = useState<Document | null>(null);
-    const [documentsList, setDocumentList] = useState<Document[]>([{documentId: 1},
-        {documentId: 2},
-        {documentId: 3},
-        {documentId: 4},
-        {documentId: 5}]);
+    const [documentsList, setDocumentList] = useState<Document[]>([
+        {
+            id: 1,
+            fileName: '1.png',
+            uploadedBy: 'User'
+        },
+        {
+            id: 2,
+            fileName: '2.png',
+            uploadedBy: 'User'
+        },
+        {
+            id: 3,
+            fileName: '3.png',
+            uploadedBy: 'User'
+        },
+        {
+            id: 4,
+            fileName: '4.png',
+            uploadedBy: 'User'
+        },
+        {
+            id: 5,
+            fileName: '5.png',
+            uploadedBy: 'User'
+        }
+    ]);
 
     useEffect(() => {
         fetchDocuments().then(data => {
@@ -52,7 +65,7 @@ export const DocumentsComponent: React.FC<{}> = () => {
 
     return (
         <div className='documents--component'>
-            <div className='documents--menu'>
+            <div className='documents--table'>
                 <DocumentDetailsView documents={documentsList}
                     selectedDocument={selectedDocument}
                     onDocumentSelected={(document: Document) => setSelectedDocument(document)}/>

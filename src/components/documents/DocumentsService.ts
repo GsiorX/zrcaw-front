@@ -1,7 +1,9 @@
 import axios, {AxiosResponse} from 'axios';
 
 export interface Document {
-    documentId: Number;
+    id: number;
+    fileName: string;
+    uploadedBy: string;
 }
 
 export async function fetchDocuments() {
@@ -16,7 +18,7 @@ export interface FileObject {
 }
 
 export async function fetchDocument(document: Document) {
-    const result: Document = await axios(`http://localhost:8080/documents/${document.documentId}`)
+    const result: Document = await axios(`http://localhost:8080/documents/${document.id}`)
         .then((response: AxiosResponse<Document>) => response.data);
     return result;
 }
