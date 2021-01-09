@@ -4,6 +4,8 @@ import ImageIcon from '@material-ui/icons/Image';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import DescriptionIcon from '@material-ui/icons/Description';
 import {DocumentsComponent} from "./components/documents/DocumentsComponent";
+import { TranslationVerificationComponent } from './components/translation_verification/TranslationVerificationComponent';
+import { TextRecognitionVerificationComponent } from './components/text_recognition_verification/TextRecognitionVerificationComponent';
 
 export var routes: AppRoute[] = [
     {
