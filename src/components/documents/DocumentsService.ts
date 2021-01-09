@@ -1,12 +1,12 @@
-import axios, {AxiosResponse} from "axios";
+import axios, {AxiosResponse} from 'axios';
 
 export interface DocumentListItem {
-    documentId: string;
+    id: string;
     name: string;
 }
 
 export interface DocumentDetails {
-    documentId: string;
+    id: string;
     name: string;
     fileDetails: FileDetails;
     translationResult: TranslationResult | null;

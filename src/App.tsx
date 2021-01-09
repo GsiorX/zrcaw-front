@@ -17,6 +17,7 @@ import { withAuthenticator } from '@aws-amplify/ui-react';
 
 import { config } from "./amplify-config"
 import './App.scss';
+import DocumentComponent from "./components/documents/document/DocumentComponent";
 
 Amplify.configure(config);
 
@@ -27,7 +28,11 @@ function App() {
         <BrowserRouter>
             <div id="main--app">
                 <Sidebar
+<<<<<<< HEAD
                     sidebar={<SidebarComponent title='Document Management' routes={appRoutes}/>}
+=======
+                    sidebar={<SidebarComponent title='AWS App' routes={appRoutes.filter(r => r.visible)}/>}
+>>>>>>> documents
                     open={true}
                     docked={true}
                 >

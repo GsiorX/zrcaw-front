@@ -24,9 +24,9 @@ const DocumentListView: React.FC<DocumentsListProps> = ({documents, selectedDocu
             documents.map((document, index) => (
                 <MenuItem key={index}
                           button
-                          selected={selectedDocument != null && document.documentId === selectedDocument.documentId}
+                          selected={selectedDocument != null && document.id === selectedDocument.id}
                           onClick={() => onDocumentSelected(document)}>
-                    <Typography variant='inherit'>{document.documentId}</Typography>
+                    <Typography variant='inherit'>{document.id}</Typography>
                 </MenuItem>
             ))
         }
@@ -46,7 +46,7 @@ const TranslationUpdateComponent: React.FC<TranslationUpdateProps> = ({currentDo
     useEffect(() => {
         if(currentDocument != null) {
             setIsLoading(true);
-            fetchDocument(currentDocument.documentId)
+            fetchDocument(currentDocument.id)
                 .then(document => {
                     setCurrentDocumentDetails(document);
                     setIsLoading(false);
@@ -69,7 +69,7 @@ const TranslationUpdateComponent: React.FC<TranslationUpdateProps> = ({currentDo
             updateTranslation({text: currentDocumentDetails?.translationResult?.translatedText,
                 sourceLanguage: currentDocumentDetails?.translationResult?.translatedText,
                 targetLanguage: currentDocumentDetails?.translationResult?.translatedText},
-                currentDocumentDetails?.documentId)
+                currentDocumentDetails?.id)
         }
     };
 
