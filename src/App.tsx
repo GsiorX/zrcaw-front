@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import Sidebar from "react-sidebar";
 import {BrowserRouter, Switch} from "react-router-dom";
-import Amplify, { Auth } from 'aws-amplify';
+import Amplify from 'aws-amplify';
 import {routes} from "./routes";
 import SidebarComponent from './components/sidebar/Sidebar';
 import RoutesComponent from './components/routes/Routes';
-import { withAuthenticator } from '@aws-amplify/ui-react';
+import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
 
 import { config } from "./amplify-config"
 import './App.scss';
@@ -19,7 +19,7 @@ function App() {
         <BrowserRouter>
             <div id="main--app">
                 <Sidebar
-                    sidebar={<SidebarComponent title='AWS App' routes={appRoutes}/>}
+                    sidebar={<SidebarComponent title='Document Management' routes={appRoutes}/>}
                     open={true}
                     docked={true}
                 >
