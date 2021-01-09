@@ -3,9 +3,9 @@ import {DataGrid, ColDef, CellParams} from '@material-ui/data-grid';
 
 import './DocumentsComponent.scss';
 import {DocumentListItem} from "./DocumentsService";
-import {downloadDocument, fetchDocuments} from "./DocumentsService";
+import {fetchDocuments} from "./DocumentsService";
 import {Button} from "@material-ui/core";
-
+import { useHistory } from "react-router-dom";
 
 const columns: ColDef[] = [
     {field: 'id', headerName: 'ID', width: 70},
@@ -15,14 +15,20 @@ const columns: ColDef[] = [
         headerName: 'Details',
         disableClickEventBubbling: true,
         renderCell: (params: CellParams) => {
-            const onClick = () => {
-               // go to documents/params.row.id //react router
-            };
-
-            return <Button variant="contained" color="primary" onClick={onClick}>Details</Button>;
+            return <DetailsButton params={params}/>;
         }
     }
 ];
+
+const DetailsButton: React.FC<{params: CellParams}> = ({params}) => {
+    const history = useHistory();
+
+    const onClick = () => {
+        history.push(`/documents/${params.row.id}`);
+    };
+
+    return <Button variant="contained" color="primary" onClick={onClick}>Details</Button>;
+};
 
 const rows = [
     {
@@ -69,45 +75,28 @@ const rows = [
 
 interface DocumentListProps {
     documents: DocumentListItem[],
-    selectedDocument: DocumentListItem | null,
-    onDocumentSelected: (document: DocumentListItem) => void;
 }
 
-const DocumentDetailsView: React.FC<DocumentListProps> = ({documents, selectedDocument, onDocumentSelected}) => (
+const DocumentDetailsView: React.FC<DocumentListProps> = ({documents}) => (
     <div style={{height: 400, width: '100%'}}>
-        <DataGrid rows={documents} columns={columns} pageSize={5} disableMultipleSelection hideFooterSelectedRowCount onRowSelected={() => onDocumentSelected}/>
+        <DataGrid rows={documents} columns={columns} pageSize={5} disableMultipleSelection hideFooterSelectedRowCount/>
     </div>
 );
 
 export const DocumentsComponent: React.FC<{}> = () => {
-    const [selectedDocument, setSelectedDocument] = useState<DocumentListItem | null>(null);
     const [documentsList, setDocumentList] = useState<DocumentListItem[]>(rows);
 
     useEffect(() => {
         fetchDocuments().then(data => {
             setDocumentList(data);
-            if (data.length > 0) {
-                setSelectedDocument(data[0]);
-            }
         });
     }, []);
 
     return (
         <div className='documents--component'>
             <div className='documents--table'>
-                <DocumentDetailsView documents={documentsList}
-                    selectedDocument={selectedDocument}
-                    onDocumentSelected={(document: DocumentListItem) => setSelectedDocument(document)}/>
+                <DocumentDetailsView documents={documentsList}/>
             </div>
-            {/*<div className='documentComponent--details--view'>*/}
-            {/*    {*/}
-            {/*        selectedDocument ? (*/}
-            {/*            <DocumentDetailsView documentComponent={selectedDocument}/>*/}
-            {/*        ) : (*/}
-            {/*            <div>Please select a bucket</div>*/}
-            {/*        )*/}
-            {/*    }*/}
-            {/*</div>*/}
         </div>
     )
 };

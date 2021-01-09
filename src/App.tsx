@@ -8,6 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import {AppRoute, routes} from "./routes";
 import './App.scss';
+import DocumentComponent from "./components/documents/document/DocumentComponent";
 
 const SidebarComponent: React.FC<{ title: string, routes: AppRoute[] }> = ({title, routes}) => {
     const location = useLocation();
@@ -53,7 +54,7 @@ function App() {
         <BrowserRouter>
             <div id="main--app">
                 <Sidebar
-                    sidebar={<SidebarComponent title='AWS App' routes={appRoutes}/>}
+                    sidebar={<SidebarComponent title='AWS App' routes={appRoutes.filter(r => r.visible)}/>}
                     open={true}
                     docked={true}
                 >
