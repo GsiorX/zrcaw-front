@@ -1,8 +1,8 @@
 .documents--component {
   display: flex;
 
-  & > .documents--menu {
-    width: 15%;
+  & > .documents--table {
+    min-width: 650px;
   }
 
   & > .document--details--view {

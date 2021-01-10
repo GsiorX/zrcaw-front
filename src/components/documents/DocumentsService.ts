@@ -1,16 +1,16 @@
-import axios, {AxiosResponse} from "axios";
+import axios, {AxiosResponse} from 'axios';
 
 export interface DocumentListItem {
-    documentId: string;
+    id: string;
     name: string;
 }
 
 export interface DocumentDetails {
-    documentId: string;
+    id: string;
     name: string;
     fileDetails: FileDetails;
-    translationResult: TranslationResult | null;
-    textRecognitionResult: TextRecognitionResult | null;
+    translationResult?: TranslationResult | null;
+    textRecognitionResult?: TextRecognitionResult | null;
 }
 
 export interface FileDetails {
@@ -41,9 +41,9 @@ export async function fetchDocument(documentId: string) {
         .then((response: AxiosResponse<DocumentDetails>) => response.data);
 }
 
-export function downloadDocument(bucketName: string, file: FileDetails) {
+export function downloadDocument(file: FileDetails) {
     axios({
-        url: getFileUrl(bucketName, file.objectKey),
+        url: getFileUrl(file.bucketName, file.objectKey),
         method: 'GET',
         responseType: 'blob'
     }).then((response: AxiosResponse<any>) => {

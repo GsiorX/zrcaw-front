@@ -53,7 +53,7 @@ function App() {
         <BrowserRouter>
             <div id="main--app">
                 <Sidebar
-                    sidebar={<SidebarComponent title='AWS App' routes={appRoutes}/>}
+                    sidebar={<SidebarComponent title='AWS App' routes={appRoutes.filter(r => r && !r.hidden)}/>}
                     open={true}
                     docked={true}
                 >

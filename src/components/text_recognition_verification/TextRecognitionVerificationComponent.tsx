@@ -21,9 +21,9 @@ const DocumentListView: React.FC<DocumentsListProps> = ({documents, selectedDocu
             documents.map((document, index) => (
                 <MenuItem key={index}
                           button
-                          selected={selectedDocument != null && document.documentId === selectedDocument.documentId}
+                          selected={selectedDocument != null && document.id === selectedDocument.id}
                           onClick={() => onDocumentSelected(document)}>
-                    <Typography variant='inherit'>{document.documentId}</Typography>
+                    <Typography variant='inherit'>{document.id}</Typography>
                 </MenuItem>
             ))
         }
@@ -43,7 +43,7 @@ const TextRecognitionUpdateComponent: React.FC<TextRecognitionUpdateProps> = ({c
     useEffect(() => {
         if(currentDocument != null) {
             setIsLoading(true);
-            fetchDocument(currentDocument.documentId)
+            fetchDocument(currentDocument.id)
                 .then(document => {
                     setCurrentDocumentDetails(document);
                     setIsLoading(false);
@@ -63,7 +63,7 @@ const TextRecognitionUpdateComponent: React.FC<TextRecognitionUpdateProps> = ({c
 
     const handleTextRecognitionUpdate = () => {
         if(TextRecognitionTextFieldValue != null) {
-            updateTextRecognition({text: currentDocumentDetails?.textRecognitionResult?.result}, currentDocumentDetails?.documentId)
+            updateTextRecognition({text: currentDocumentDetails?.textRecognitionResult?.result}, currentDocumentDetails?.id)
         }
     };
 

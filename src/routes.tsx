@@ -8,6 +8,7 @@ import {BucketsComponent} from "./components/buckets/BucketsComponent";
 import {DocumentsComponent} from "./components/documents/DocumentsComponent";
 import {TranslationVerificationComponent} from "./components/translation_verification/TranslationVerificationComponent";
 import {TextRecognitionVerificationComponent} from "./components/text_recognition_verification/TextRecognitionVerificationComponent";
+import DocumentComponent from "./components/documents/document/DocumentComponent";
 
 export var routes: AppRoute[] = [
     {
@@ -23,6 +24,13 @@ export var routes: AppRoute[] = [
         label: 'Documents',
         icon: <DescriptionIcon />,
         component: () => <DocumentsComponent/>
+    },
+    {
+        path: "/documents/:id",
+        label: 'Document',
+        icon: <DescriptionIcon />,
+        hidden: true,
+        component: () => <DocumentComponent/>
     },
     {
         path: "/translationVerification",
@@ -41,6 +49,7 @@ export var routes: AppRoute[] = [
 export interface AppRoute {
     path: string,
     exact?: boolean,
+    hidden?: boolean,
     label: string,
     icon: React.ReactElement<SvgIconProps>,
     component: () => JSX.Element;
