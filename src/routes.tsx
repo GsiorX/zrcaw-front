@@ -16,7 +16,6 @@ export var routes: AppRoute[] = [
         exact: true,
         label: 'Buckets',
         icon: <WorkIcon />,
-        visible: true,
         component: () => <BucketsComponent />
     },
     {
@@ -24,28 +23,25 @@ export var routes: AppRoute[] = [
         exact: true,
         label: 'Documents',
         icon: <DescriptionIcon />,
-        visible: true,
         component: () => <DocumentsComponent/>
     },
     {
         path: "/documents/:id",
         label: 'Document',
         icon: <DescriptionIcon />,
-        visible: false,
+        hidden: true,
         component: () => <DocumentComponent/>
     },
     {
         path: "/translationVerification",
         label: 'Translation verification',
         icon: <PhotoLibraryIcon />,
-        visible: true,
         component: () => <TranslationVerificationComponent />
     },
     {
         path: "/textRecognitionVerification",
         label: 'Text recognition verification',
         icon: <ImageIcon />,
-        visible: true,
         component: () => <TextRecognitionVerificationComponent />
     }
 ];
@@ -53,7 +49,7 @@ export var routes: AppRoute[] = [
 export interface AppRoute {
     path: string,
     exact?: boolean,
-    visible: boolean,
+    hidden?: boolean,
     label: string,
     icon: React.ReactElement<SvgIconProps>,
     component: () => JSX.Element;
