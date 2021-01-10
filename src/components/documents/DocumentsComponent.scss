@@ -1,8 +1,10 @@
 .documents--component {
   display: flex;
+  height: 100%;
 
   & > .documents--table {
     min-width: 650px;
+    width: 100%;
   }
 
   & > .document--details--view {

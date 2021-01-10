@@ -3,10 +3,11 @@ import { SvgIconProps } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/Image';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import DescriptionIcon from '@material-ui/icons/Description';
-import {DocumentsComponent} from "./components/documents/DocumentsComponent";
-import {TranslationVerificationComponent} from "./components/translation_verification/TranslationVerificationComponent";
-import {TextRecognitionVerificationComponent} from "./components/text_recognition_verification/TextRecognitionVerificationComponent";
-import DocumentComponent from "./components/documents/document/DocumentComponent";
+
+const DocumentComponent = React.lazy(() => import('./components/documents/document/DocumentComponent'));
+const DocumentsComponent = React.lazy(() => import('./components/documents/DocumentsComponent'));
+const TranslationVerificationComponent = React.lazy(() => import('./components/translation_verification/TranslationVerificationComponent'));
+const TextRecognitionVerificationComponent = React.lazy(() => import('./components/text_recognition_verification/TextRecognitionVerificationComponent'));
 
 export var routes: AppRoute[] = [
     {

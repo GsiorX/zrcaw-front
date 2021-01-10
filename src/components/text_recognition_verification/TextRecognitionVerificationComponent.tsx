@@ -100,7 +100,7 @@ const TextRecognitionUpdateComponent: React.FC<TextRecognitionUpdateProps> = ({c
     );
 };
 
-export const TextRecognitionVerificationComponent: React.FC = () => {
+const TextRecognitionVerificationComponent: React.FC = () => {
     const [selectedDocument, setSelectedDocument] = useState<DocumentListItem | null>(null);
     const [documentList, setDocumentList] = useState<DocumentListItem[]>([]);
 
@@ -124,3 +124,5 @@ export const TextRecognitionVerificationComponent: React.FC = () => {
         </div>
     )
 };
+
+export default TextRecognitionVerificationComponent;

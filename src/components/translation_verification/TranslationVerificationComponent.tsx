@@ -106,7 +106,7 @@ const TranslationUpdateComponent: React.FC<TranslationUpdateProps> = ({currentDo
     );
 };
 
-export const TranslationVerificationComponent: React.FC = () => {
+const TranslationVerificationComponent: React.FC = () => {
     const [selectedDocument, setSelectedDocument] = useState<DocumentListItem | null>(null);
     const [documentList, setDocumentList] = useState<DocumentListItem[]>([]);
 
@@ -130,3 +130,5 @@ export const TranslationVerificationComponent: React.FC = () => {
         </div>
     )
 };
+
+export default TranslationVerificationComponent;

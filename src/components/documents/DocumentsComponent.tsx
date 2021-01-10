@@ -77,13 +77,7 @@ interface DocumentListProps {
     documents: DocumentListItem[],
 }
 
-const DocumentDetailsView: React.FC<DocumentListProps> = ({documents}) => (
-    <div style={{height: 400, width: '100%'}}>
-        <DataGrid rows={documents} columns={columns} pageSize={5} disableMultipleSelection hideFooterSelectedRowCount/>
-    </div>
-);
-
-export const DocumentsComponent: React.FC<{}> = () => {
+const DocumentsComponent: React.FC<{}> = () => {
     const [documentsList, setDocumentList] = useState<DocumentListItem[]>(rows);
 
     useEffect(() => {
@@ -94,9 +88,15 @@ export const DocumentsComponent: React.FC<{}> = () => {
 
     return (
         <div className='documents--component'>
-            <div className='documents--table'>
-                <DocumentDetailsView documents={documentsList}/>
-            </div>
+            <DataGrid
+                rows={documentsList}
+                columns={columns}
+                pageSize={5}
+                disableMultipleSelection
+                hideFooterSelectedRowCount
+            />
         </div>
     )
 };
+
+export default DocumentsComponent;
