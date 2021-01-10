@@ -1,13 +1,26 @@
 import axios, {AxiosResponse} from 'axios';
 
-export interface DocumentListItem {
+export interface Document {
     id: string;
     name: string;
+    uploadedBy: string;
+    uploadedAt: string;
+    modifiedBy?: string;
+    modifiedAt?: string;
+    originalName: string;
+    ocrResult?: string;
+    ocrConfidence: number;
+    translationResult?: string;
+    translationConfidence: number;
 }
 
 export interface DocumentDetails {
     id: string;
     name: string;
+    uploadedBy: string;
+    uploadedAt: string;
+    modifiedBy: string;
+    modifiedAt: string;
     fileDetails: FileDetails;
     translationResult: TranslationResult | null;
     textRecognitionResult: TextRecognitionResult | null;
@@ -16,24 +29,32 @@ export interface DocumentDetails {
 export interface FileDetails {
     objectKey: string;
     bucketName: string;
+    originalName: string;
 }
 
 export interface TranslationResult {
     resultType: string;
+    confidence: number;
     translatedText: string;
     sourceLanguage: string;
     targetLanguage: string;
+    translatedAt: Date;
 }
 
 export interface TextRecognitionResult {
     resultType: string;
     confidence: number;
     result: string;
+    ocrProcessedAt: Date;
 }
 
 export async function fetchDocuments() {
     return await axios(`http://localhost:8080/documents`)
-        .then((response: AxiosResponse<DocumentListItem[]>) => response.data);
+        .then((response: AxiosResponse<Document[]>) => response.data)
+        .then(documents => {
+            console.info(documents);
+            return documents;
+        });
 }
 
 export async function fetchDocument(documentId: string) {

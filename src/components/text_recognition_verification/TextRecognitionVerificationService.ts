@@ -1,6 +1,6 @@
 import axios, {AxiosResponse} from 'axios';
 
-import {DocumentDetails} from "../documents/DocumentsService";
+import {Document} from "../documents/DocumentsService";
 
 export interface TextRecognitionUpdateRequest {
     text: string | undefined;
@@ -8,7 +8,7 @@ export interface TextRecognitionUpdateRequest {
 
 export async function fetchDocumentsToTextRecognitionVerification() {
     return await axios(`http://localhost:8080/documents/ocrs`)
-        .then((response: AxiosResponse<DocumentDetails[]>) => response.data);
+        .then((response: AxiosResponse<Document[]>) => response.data);
 }
 
 export async function updateTextRecognition(textRecognition: TextRecognitionUpdateRequest, documentId: string | undefined) {

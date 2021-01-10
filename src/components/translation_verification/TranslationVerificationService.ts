@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from 'axios';
-import {DocumentListItem} from "../documents/DocumentsService";
+import {Document} from "../documents/DocumentsService";
 
 export interface TranslationUpdateRequest {
     text: string | undefined;
@@ -9,7 +9,7 @@ export interface TranslationUpdateRequest {
 
 export async function fetchDocumentsToTranslationVerification() {
     return await axios(`http://localhost:8080/documents/translations`)
-        .then((response: AxiosResponse<DocumentListItem[]>) => response.data);
+        .then((response: AxiosResponse<Document[]>) => response.data);
 }
 
 export async function updateTranslation(translation: TranslationUpdateRequest, documentId: string | undefined) {

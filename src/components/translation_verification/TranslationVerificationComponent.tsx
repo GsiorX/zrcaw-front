@@ -9,13 +9,13 @@ import {
 import MenuList from "@material-ui/core/MenuList";
 import MenuItem from "@material-ui/core/MenuItem";
 import Typography from "@material-ui/core/Typography";
-import {DocumentDetails, DocumentListItem, fetchDocument} from "../documents/DocumentsService";
+import {DocumentDetails, Document, fetchDocument} from "../documents/DocumentsService";
 
 
 interface DocumentsListProps {
-    documents: DocumentListItem[],
-    selectedDocument: DocumentListItem | null,
-    onDocumentSelected: (document: DocumentListItem) => void;
+    documents: Document[],
+    selectedDocument: Document | null,
+    onDocumentSelected: (document: Document) => void;
 }
 
 const DocumentListView: React.FC<DocumentsListProps> = ({documents, selectedDocument, onDocumentSelected}) => (
@@ -34,8 +34,8 @@ const DocumentListView: React.FC<DocumentsListProps> = ({documents, selectedDocu
 );
 
 interface TranslationUpdateProps {
-    currentDocument: DocumentListItem | null;
-    onCurrentDocumentChanged: (document: DocumentListItem | null) => void;
+    currentDocument: Document | null;
+    onCurrentDocumentChanged: (document: Document | null) => void;
 }
 
 const TranslationUpdateComponent: React.FC<TranslationUpdateProps> = ({currentDocument}) => {
@@ -107,8 +107,8 @@ const TranslationUpdateComponent: React.FC<TranslationUpdateProps> = ({currentDo
 };
 
 const TranslationVerificationComponent: React.FC = () => {
-    const [selectedDocument, setSelectedDocument] = useState<DocumentListItem | null>(null);
-    const [documentList, setDocumentList] = useState<DocumentListItem[]>([]);
+    const [selectedDocument, setSelectedDocument] = useState<Document | null>(null);
+    const [documentList, setDocumentList] = useState<Document[]>([]);
 
     useEffect( () => {
         fetchDocumentsToTranslationVerification().then(data => {
