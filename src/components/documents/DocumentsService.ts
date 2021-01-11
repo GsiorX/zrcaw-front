@@ -38,14 +38,14 @@ export interface TranslationResult {
     translatedText: string;
     sourceLanguage: string;
     targetLanguage: string;
-    translatedAt: Date;
+    translatedAt: string;
 }
 
 export interface TextRecognitionResult {
     resultType: string;
     confidence: number;
     result: string;
-    ocrProcessedAt: Date;
+    ocrProcessedAt: string;
 }
 
 export async function fetchDocuments() {

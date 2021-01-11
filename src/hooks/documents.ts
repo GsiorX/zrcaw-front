@@ -1,7 +1,7 @@
 import {Document, DocumentDetails} from "../components/documents/DocumentsService";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import {useAuthenticatedAxios} from "./authentication";
-import axios, {AxiosResponse} from "axios";
+import {AxiosResponse} from "axios";
 import {useAsyncResource} from "use-async-resource";
 
 export interface DocumentPage {
@@ -111,10 +111,64 @@ export const useDocuments = (paginable: Paginable = {limit: 10}, ocrStatuses: Pr
     }
 };
 
-export const useDocument = (id: string) => {
+export const useDocument = () => {
     const axiosHandler = useAuthenticatedAxios();
-    return useAsyncResource(async () => {
-        const response = await axiosHandler(`http://localhost:8080/documents/${id}`);
-        return response.data;
+    return useAsyncResource(async (id: string) => {
+        const response = await axiosHandler(`/documents/${id}`);
+        return response.data as DocumentDetails;
     });
+};
+
+export const useDocumentBase64Image = () => {
+    const axiosHandler = useAuthenticatedAxios();
+    return useAsyncResource(async (id: string) => {
+        const url = `/documents/${id}/download`;
+        const response = await axiosHandler(url, {responseType: "arraybuffer"});
+        const base64 = Buffer.from(response.data, 'binary').toString('base64');
+        const contentType = response.headers["Content-Type"];
+        return `data:${contentType};base64,${base64}`;
+    })
+};
+
+export const useDownloadDocument = () => {
+    const axiosHandler = useAuthenticatedAxios();
+    return (id: string) => {
+        axiosHandler(`/documents/${id}/download`, {method: 'GET', responseType: 'blob'})
+            .then((response: AxiosResponse<any>) => {
+                // content-disposition: attachment;filename=<NAME>
+                alert(JSON.stringify(response.headers, null, 2));
+                const filename = (response.headers["content-disposition"] as string).replace('attachment;filename=', '');
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', filename);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            })
+    };
+};
+
+export interface DocumentUpdateTextRecognitionDTO {
+    text: string;
+}
+
+export const useUpdateTextRecognition = () => {
+    const axiosHandler = useAuthenticatedAxios();
+    return (id: string, payload: DocumentUpdateTextRecognitionDTO) => {
+        return axiosHandler(`/documents/${id}/ocrs`, { method: 'PUT', data: payload });
+    }
+};
+
+export interface DocumentUpdateTranslationDTO {
+    text: string;
+    sourceLanguage: string;
+    targetLanguage: string;
+}
+
+export const useUpdateTranslationRecognition = () => {
+    const axiosHandler = useAuthenticatedAxios();
+    return (id: string, payload: DocumentUpdateTranslationDTO) => {
+        return axiosHandler(`/documents/${id}/translations`, { method: 'PUT', data: payload });
+    }
 };

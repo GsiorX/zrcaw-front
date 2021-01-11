@@ -1,13 +1,20 @@
 import React, {useState} from 'react';
-import {ColDef, DataGrid} from '@material-ui/data-grid';
+import {CellParams, ColDef, DataGrid} from '@material-ui/data-grid';
 
 import './DocumentsComponent.scss';
 import {ProcessingStatus, useDocuments} from "../../hooks/documents";
+import {useHistory} from "react-router";
+import {Button} from "@material-ui/core";
 
-// uploadedBy: string;
-// uploadedAt: Date;
-// modifiedBy: string;
-// modifiedAt: Date;
+export const DetailsButton: React.FC<{ params: CellParams }> = ({params}) => {
+    const history = useHistory();
+
+    const onClick = () => {
+        history.push(`/documents/${params.row.id}`);
+    };
+
+    return <Button className='details--button' variant="contained" onClick={onClick}>Details</Button>;
+};
 
 export interface DocumentsComponentConfig {
     columns: ColDef[];

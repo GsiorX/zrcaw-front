@@ -44,3 +44,17 @@
     font-weight: bold;
   }
 }
+
+.details--button {
+  background-color: #ff9900;
+  color: white;
+  font-weight: bold;
+
+  max-width: 150px;
+
+  //margin: 5px 5px 5px 5px;
+
+  &:hover {
+    background-color: #ffac31;
+  }
+}

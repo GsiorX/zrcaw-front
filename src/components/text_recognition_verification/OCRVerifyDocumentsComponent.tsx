@@ -1,17 +1,23 @@
 import React from 'react';
 import {CellParams, ColDef} from "@material-ui/data-grid";
 import Tooltip from "@material-ui/core/Tooltip/Tooltip";
-import {useHistory} from "react-router";
-import {Button} from "@material-ui/core";
-import DocumentsComponent from "../documents/DocumentsComponent";
+import DocumentsComponent, {DetailsButton} from "../documents/DocumentsComponent";
 import {ProcessingStatus} from "../../hooks/documents";
 
 const columns: ColDef[] = [
     {
+        field: '',
+        headerName: 'Details',
+        disableClickEventBubbling: true,
+        renderCell: (params: CellParams) => {
+            return <DetailsButton params={params}/>;
+        }
+    },
+    {
         field: 'name', headerName: 'Name', width: 200,
         renderCell: (params: CellParams) => {
-            if(!params.value) {
-                return <div />
+            if (!params.value) {
+                return <div/>
             }
             return (
                 <Tooltip title={params.value.toString()}>
@@ -23,8 +29,8 @@ const columns: ColDef[] = [
     {
         field: 'uploadedBy', headerName: 'Uploaded By', width: 150,
         renderCell: (params: CellParams) => {
-            if(!params.value) {
-                return <div />
+            if (!params.value) {
+                return <div/>
             }
             return (
                 <Tooltip title={params.value.toString()}>
@@ -36,8 +42,8 @@ const columns: ColDef[] = [
     {
         field: 'uploadedAt', headerName: 'Upload Date', width: 200,
         renderCell: (params: CellParams) => {
-            if(!params.value) {
-                return <div />
+            if (!params.value) {
+                return <div/>
             }
             const date = new Date(params.value as string);
             return (
@@ -50,8 +56,8 @@ const columns: ColDef[] = [
     {
         field: 'modifiedBy', headerName: 'Modified By', width: 150,
         renderCell: (params: CellParams) => {
-            if(!params.value) {
-                return <div />
+            if (!params.value) {
+                return <div/>
             }
             return (
                 <Tooltip title={params.value.toString()}>
@@ -63,8 +69,8 @@ const columns: ColDef[] = [
     {
         field: 'modifiedAt', headerName: 'Modify Date', width: 200,
         renderCell: (params: CellParams) => {
-            if(!params.value) {
-                return <div />
+            if (!params.value) {
+                return <div/>
             }
             const date = new Date(params.value as string);
             return (
@@ -77,8 +83,8 @@ const columns: ColDef[] = [
     {
         field: 'ocrResult', headerName: 'OCR (Status)', width: 200,
         renderCell: (params: CellParams) => {
-            if(!params.value) {
-                return <div />
+            if (!params.value) {
+                return <div/>
             }
             return (
                 <Tooltip title={params.value.toString()}>
@@ -90,8 +96,8 @@ const columns: ColDef[] = [
     {
         field: 'ocrConfidence', headerName: 'OCR (Confidence)',
         renderCell: (params: CellParams) => {
-            if(!params.value) {
-                return <div />
+            if (!params.value) {
+                return <div/>
             }
             const value = `${parseFloat(params.value.toString()).toFixed(2)}%`;
             return (
@@ -104,8 +110,8 @@ const columns: ColDef[] = [
     {
         field: 'translationResult', headerName: 'Translation (Status)', width: 230,
         renderCell: (params: CellParams) => {
-            if(!params.value) {
-                return <div />
+            if (!params.value) {
+                return <div/>
             }
             return (
                 <Tooltip title={params.value.toString()}>
@@ -117,8 +123,8 @@ const columns: ColDef[] = [
     {
         field: 'translationConfidence', headerName: 'Translation (Confidence)',
         renderCell: (params: CellParams) => {
-            if(!params.value) {
-                return <div />
+            if (!params.value) {
+                return <div/>
             }
             const value = `${parseFloat(params.value.toString()).toFixed(2)}%`;
             return (
@@ -127,26 +133,8 @@ const columns: ColDef[] = [
                 </Tooltip>
             );
         }
-    },
-    {
-        field: '',
-        headerName: 'Details',
-        disableClickEventBubbling: true,
-        renderCell: (params: CellParams) => {
-            return <DetailsButton params={params}/>;
-        }
     }
 ];
-
-const DetailsButton: React.FC<{ params: CellParams }> = ({params}) => {
-    const history = useHistory();
-
-    const onClick = () => {
-        history.push(`/documents/${params.row.id}`);
-    };
-
-    return <Button variant="contained" color="primary" onClick={onClick}>Details</Button>;
-};
 
 const OCRVerifyDocumentsComponent = () => {
     return (
