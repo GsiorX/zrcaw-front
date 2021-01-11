@@ -3,14 +3,27 @@ import {CellParams, ColDef} from "@material-ui/data-grid";
 import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 import DocumentsComponent, {DetailsButton} from "../documents/DocumentsComponent";
 import {ProcessingStatus} from "../../hooks/documents";
+import {VerifyTranslationButton} from "../../utils/verifyButton";
 
 const columns: ColDef[] = [
     {
-        field: '',
+        field: 'details--button',
         headerName: 'Details',
         disableClickEventBubbling: true,
         renderCell: (params: CellParams) => {
             return <DetailsButton params={params}/>;
+        }
+    },
+    {
+        field: 'verify--button',
+        headerName: 'Verify OCR',
+        disableClickEventBubbling: true,
+        renderCell: (params: CellParams) => {
+            return <VerifyTranslationButton
+                link={(id: string) => `/textRecognitionVerification/${id}`}
+                text='Verify'
+                params={params}
+            />
         }
     },
     {
