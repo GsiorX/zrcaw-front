@@ -5,8 +5,10 @@ import ImageIcon from '@material-ui/icons/Image';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import DescriptionIcon from '@material-ui/icons/Description';
 import HomeIcon from '@material-ui/icons/Home';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 import LandingPage from "./components/landing_page/LandingPage";
+import SettingsComponent from "./components/settings/SettingsComponent";
 import UploadDocumentComponent from "./components/documents/upload/UploadDocumentComponent";
 const TextRecognitionUpdateComponent = React.lazy(() => import('./components/text_recognition_verification/TextRecognitionUpdateComponent'));
 const TranslationUpdateComponent = React.lazy(() => import('./components/translation_verification/TranslationUpdateComponent'));
@@ -68,6 +70,12 @@ export var routes: AppRoute[] = [
         label: 'Update text recognition',
         hidden: true,
         component: (props) => <TextRecognitionUpdateComponent {...props} />
+    },
+    {
+        path: "/settings",
+        label: 'Settings',
+        icon: <SettingsIcon />,
+        component: (props) => <SettingsComponent {...props} />
     }
 ];
 
