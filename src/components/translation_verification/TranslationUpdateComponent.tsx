@@ -107,7 +107,7 @@ const TextRecognitionUpdateForm = (props: DocumentDetailProps) => {
             <form onSubmit={formik.handleSubmit} className='update--form'>
                 <CustomTextArea
                     className='form--textarea form--input'
-                    label='Translated Text'
+                    label='Extracted Text'
                     name='ocrText'
                     required={true}
                     disabled={true}

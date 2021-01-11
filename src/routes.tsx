@@ -7,6 +7,7 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import HomeIcon from '@material-ui/icons/Home';
 
 import LandingPage from "./components/landing_page/LandingPage";
+import UploadDocumentComponent from "./components/documents/upload/UploadDocumentComponent";
 const TextRecognitionUpdateComponent = React.lazy(() => import('./components/text_recognition_verification/TextRecognitionUpdateComponent'));
 const TranslationUpdateComponent = React.lazy(() => import('./components/translation_verification/TranslationUpdateComponent'));
 const DocumentComponent = React.lazy(() => import('./components/documents/document/DocumentComponent'));
@@ -21,6 +22,13 @@ export var routes: AppRoute[] = [
         label: 'Home',
         icon: <HomeIcon />,
         component: (props) => <LandingPage {...props} />
+    },
+    {
+        path: "/upload",
+        label: 'Upload document',
+        exact: true,
+        icon: <DescriptionIcon />,
+        component: (props) => <UploadDocumentComponent {...props} />
     },
     {
         path: "/documents",

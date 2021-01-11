@@ -136,7 +136,6 @@ export const useDownloadDocument = () => {
         axiosHandler(`/documents/${id}/download`, {method: 'GET', responseType: 'blob'})
             .then((response: AxiosResponse<any>) => {
                 // content-disposition: attachment;filename=<NAME>
-                alert(JSON.stringify(response.headers, null, 2));
                 const filename = (response.headers["content-disposition"] as string).replace('attachment;filename=', '');
                 const url = window.URL.createObjectURL(new Blob([response.data]));
                 const link = document.createElement('a');
@@ -170,5 +169,37 @@ export const useUpdateTranslationRecognition = () => {
     const axiosHandler = useAuthenticatedAxios();
     return (id: string, payload: DocumentUpdateTranslationDTO) => {
         return axiosHandler(`/documents/${id}/translations`, { method: 'PUT', data: payload });
+    }
+};
+
+export interface UploadDocumentDTO {
+    name: string;
+    sourceLanguage: string;
+    targetLanguage: string;
+    file: File | null;
+}
+
+export const useDocumentUpload = () => {
+    const axiosHandler = useAuthenticatedAxios();
+    return (payload: UploadDocumentDTO) => {
+        const fileToSend = payload.file;
+        if (fileToSend == null)
+            return;
+        var formData = new FormData();
+        formData.append("file", fileToSend as Blob);
+        formData.append("fileName", fileToSend.name);
+        formData.append("mimeType", fileToSend.type);
+        formData.append("name", payload.name);
+        formData.append("sourceLang", payload.sourceLanguage);
+        formData.append("targetLang", payload.targetLanguage);
+
+        return axiosHandler('/documents',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                },
+                data: formData
+            }).then((response: AxiosResponse<DocumentDetails>) => response.data);
     }
 };

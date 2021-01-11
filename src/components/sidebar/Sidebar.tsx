@@ -18,6 +18,19 @@ const SidebarComponent: React.FC<{ title: string, routes: AppRoute[] }> = ({titl
             return true;
         }
         return !route.hidden;
+    };
+
+    const generateRouteList = (routes: AppRoute[]) => {
+        return routes
+            .filter(route => shouldDisplay(route))
+            .map((route, index) => (
+                <Link to={route.path} style={{ color: 'inherit', textDecoration: 'none' }} key={index}>
+                    <ListItem button key={index} selected={location.pathname === route.path}>
+                        <ListItemIcon>{route.icon}</ListItemIcon>
+                        <ListItemText primary={route.label}/>
+                    </ListItem>
+                </Link>
+            ));
     }
 
     return (
@@ -26,18 +39,7 @@ const SidebarComponent: React.FC<{ title: string, routes: AppRoute[] }> = ({titl
                 <p className='title'>{title}</p>
             </div>
             <List className='route--list'>
-                {
-                    routes
-                    .filter(route => shouldDisplay(route))
-                    .map((route, index) => (
-                        <Link to={route.path} style={{ color: 'inherit', textDecoration: 'none' }} key={index}>
-                            <ListItem button key={index} selected={location.pathname === route.path}>
-                                <ListItemIcon>{route.icon}</ListItemIcon>
-                                <ListItemText primary={route.label}/>
-                            </ListItem>
-                        </Link>
-                    ))
-                }
+                { generateRouteList(routes) }
             </List>
             <AmplifySignOut className="signout" />
         </div>

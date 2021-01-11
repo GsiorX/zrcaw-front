@@ -14,10 +14,11 @@ interface LanguageSelectorProps {
         child: React.ReactNode
     ) => void;
     value: string;
+    required?: boolean;
 }
 
 const LanguageSelector = (props: LanguageSelectorProps) => {
-    const { className, name, label, value, onChange } = props;
+    const { className, name, label, value, onChange, required } = props;
 
     const [uuid, ] = useState(uuidv4());
     return (
@@ -28,6 +29,7 @@ const LanguageSelector = (props: LanguageSelectorProps) => {
                 name={name}
                 value={value}
                 onChange={onChange}
+                required={required ? required : false}
             >
                 <MenuItem value="en">English</MenuItem>
                 <MenuItem value="pl">Polish</MenuItem>
