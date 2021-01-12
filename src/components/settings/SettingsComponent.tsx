@@ -5,6 +5,8 @@ import {useAuthenticatedAxios} from "../../hooks/authentication";
 import {useSettings} from "../../hooks/settings";
 import {Settings} from "./SettingsService";
 
+import './SettingsComponent.scss';
+
 interface SettingsProps {
     settings: Settings
 }
@@ -54,7 +56,7 @@ const SettingsForm = (props: SettingsProps) => {
         onSubmit: (values: Settings) => {
             setIsSubmitting(true);
             //Bieda
-            axiosHandler(`http://localhost:8080/settings`, {method: 'PUT', data: values}).then(response => {
+            axiosHandler(`/settings`, {method: 'PUT', data: values}).then(response => {
                 if(response) {
                     formik.setFieldValue('ocrThreshold', response.data.ocrThreshold);
                     formik.setFieldValue('translationThreshold', response.data.translationThreshold);
@@ -66,36 +68,33 @@ const SettingsForm = (props: SettingsProps) => {
     })
 
     return (
-        <form onSubmit={formik.handleSubmit}>
+        <form className='form--settings--container' onSubmit={formik.handleSubmit}>
             <TextField name="ocrThreshold"
-                label="OCR threshold"
-                className='form--input'
-                required={true}
-                onChange={formik.handleChange}
-                value={formik.values.ocrThreshold}/>
-
+                       label="OCR threshold"
+                       className='form--input'
+                       required={true}
+                       onChange={formik.handleChange}
+                       value={formik.values.ocrThreshold}/>
             <TextField name="translationThreshold"
-                label="Translation threshold"
-                className='form--input'
-                required={true}
-                onChange={formik.handleChange}
-                value={formik.values.translationThreshold}/>
-
+                       label="Translation threshold"
+                       className='form--input'
+                       required={true}
+                       onChange={formik.handleChange}
+                       value={formik.values.translationThreshold}/>
             <Button onClick={() => formik.submitForm()}
-                variant="contained" disabled={isSubmitting}
-                color="primary">Submit</Button>
-
+                    className='submit--button'
+                    variant="contained" disabled={isSubmitting}>Submit</Button>
             {formik.errors.ocrThreshold && <div>{formik.errors.ocrThreshold}</div>}
             {formik.errors.translationThreshold && <div>{formik.errors.translationThreshold}</div>}
         </form>
     );
-}
+};
 
 const SettingsComponent: React.FC = () => {
     const settings = useSettings();
 
     return (
-        <div>
+        <div className='settings--container'>
             <h2>Settings</h2>
             <SettingsForm settings={settings}/>
         </div>

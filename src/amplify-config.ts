@@ -11,6 +11,7 @@ export const config: any = {
         //     sameSite: 'strict',
         //     secure: true
         // },
+
         oauth: {
             domain: 'ocr-document-management.auth.us-east-1.amazoncognito.com',
             scope: [

@@ -1,5 +1,5 @@
 import React from 'react';
-import { SvgIconProps } from '@material-ui/core';
+import {SvgIconProps} from '@material-ui/core';
 
 import ImageIcon from '@material-ui/icons/Image';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
@@ -10,6 +10,8 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import LandingPage from "./components/landing_page/LandingPage";
 import SettingsComponent from "./components/settings/SettingsComponent";
 import UploadDocumentComponent from "./components/documents/upload/UploadDocumentComponent";
+import {UserGroups} from "./hooks/authentication";
+
 const TextRecognitionUpdateComponent = React.lazy(() => import('./components/text_recognition_verification/TextRecognitionUpdateComponent'));
 const TranslationUpdateComponent = React.lazy(() => import('./components/translation_verification/TranslationUpdateComponent'));
 const DocumentComponent = React.lazy(() => import('./components/documents/document/DocumentComponent'));
@@ -30,6 +32,7 @@ export var routes: AppRoute[] = [
         label: 'Upload document',
         exact: true,
         icon: <DescriptionIcon />,
+        requiredGroups: [UserGroups.CLIENT, UserGroups.WORKER],
         component: (props) => <UploadDocumentComponent {...props} />
     },
     {
@@ -37,12 +40,14 @@ export var routes: AppRoute[] = [
         exact: true,
         label: 'Documents',
         icon: <DescriptionIcon />,
+        requiredGroups: [UserGroups.CLIENT, UserGroups.WORKER],
         component: (props) => <AllDocumentsComponent {...props} />
     },
     {
         path: "/documents/:id",
         label: 'Document',
         hidden: true,
+        requiredGroups: [UserGroups.CLIENT, UserGroups.WORKER],
         component: (props) => <DocumentComponent {...props} />
     },
     {
@@ -50,12 +55,14 @@ export var routes: AppRoute[] = [
         exact: true,
         label: 'Translation verification',
         icon: <PhotoLibraryIcon />,
+        requiredGroups: [UserGroups.WORKER],
         component: (props) => <TranslationVerifyDocumentsComponent {...props} />
     },
     {
         path: "/translationVerification/:id",
         label: 'Translation verification',
         hidden: true,
+        requiredGroups: [UserGroups.WORKER],
         component: (props) => <TranslationUpdateComponent {...props} />
     },
     {
@@ -63,18 +70,21 @@ export var routes: AppRoute[] = [
         label: 'Text recognition verification',
         exact: true,
         icon: <ImageIcon />,
+        requiredGroups: [UserGroups.WORKER],
         component: (props) => <OCRVerifyDocumentsComponent {...props} />
     },
     {
         path: "/textRecognitionVerification/:id",
         label: 'Update text recognition',
         hidden: true,
+        requiredGroups: [UserGroups.WORKER],
         component: (props) => <TextRecognitionUpdateComponent {...props} />
     },
     {
         path: "/settings",
         label: 'Settings',
         icon: <SettingsIcon />,
+        requiredGroups: [UserGroups.MANAGER],
         component: (props) => <SettingsComponent {...props} />
     }
 ];
@@ -86,4 +96,5 @@ export interface AppRoute {
     hidden?: boolean,
     icon?: React.ReactElement<SvgIconProps>,
     component: (props: any) => JSX.Element;
+    requiredGroups?: UserGroups[];
 }

@@ -9,11 +9,16 @@ import { AppRoute } from "../../routes";
 import { AmplifySignOut } from '@aws-amplify/ui-react';
 
 import "./Sidebar.scss";
+import {useAuthorizedRoute} from "../../hooks/authentication";
 
 const SidebarComponent: React.FC<{ title: string, routes: AppRoute[] }> = ({title, routes}) => {
     const location = useLocation();
+    const isRouteAuthorized = useAuthorizedRoute();
 
     const shouldDisplay = (route: AppRoute) => {
+        if(!isRouteAuthorized(route)) {
+            return false;
+        }
         if(route.hidden === undefined || route.hidden === null) {
             return true;
         }

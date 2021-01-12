@@ -9,10 +9,10 @@ export const useSettings = () => {
 
     useEffect(() => {
         const fetchSettings = async() => {
-            const response = await axiosHandler(`http://localhost:8080/settings`).then((response: AxiosResponse<Settings>) => response.data);
+            const response = await axiosHandler(`/settings`).then((response: AxiosResponse<Settings>) => response.data);
             console.log("Fetching settings...", response);
             setSettings(response);
-        }
+        };
 
         fetchSettings();
     }, []);
